@@ -14,19 +14,19 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
-  programs.neovim = 
-  let
-      toLua = str: "lua << EOF\n${str}\nEOF\n";
-      toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-  in
-  {
-      enable = true;
-      
-      plugins = with pkgs.vimPlugins; [
-         comment-nvim 
-      ];
-  };
-  # The home.packages option allows you to install Nix packages into your
+  # programs.neovim = 
+  # let
+  #     toLua = str: "lua << EOF\n${str}\nEOF\n";
+  #     toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
+  # in
+  # {
+  #     enable = true;
+  #     
+  #     plugins = with pkgs.vimPlugins; [
+  #        comment-nvim 
+  #     ];
+  # };
+  # # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly

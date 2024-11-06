@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -61,6 +61,7 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+  hardware.bluetooth.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -96,33 +97,49 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     git
-     python3
-     python312Packages.scapy
-     python312Packages.impacket
-     fzf
-     yazi
-     nmap
-     ncdu
-     fastfetch
-     eza
-     zoxide
-     docker
-     wl-clipboard
-     fd
-     gnumake
-     gcc
-     netexec
-     lunarvim
-  ] ++ (if (config.services.xserver.windowManager.xmonad.enable == true)
-            then [ pkgs.rofi ]
-	else
+  environment.systemPackages = 
+    (with pkgs; [
+       neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+       wget
+       git
+       python3
+       python312Packages.scapy
+       python312Packages.impacket
+       fzf
+       yazi
+       nmap
+       ncdu
+       fastfetch
+       eza
+       zoxide
+       docker
+       wl-clipboard
+       fd
+       gnumake
+       gcc
+       netexec
+       lunarvim
+       payloadsallthethings
+       seclists
+       bloodhound-py
+       gobuster
+       fira-code
+    ]) 
+
+    ++ 
+
+    (if (config.services.xserver.windowManager.xmonad.enable == true)
+      then [ pkgs.rofi ]
+	  else
 	    (if (config.programs.hyprland.enable == true)
-	         then [ pkgs.tofi ] else [])
-  );
+	      then [ pkgs.tofi ] else [])
+    )
+
+    ++
+
+    (with pkgs-unstable; [
+      showtime
+    ]);
 
   virtualisation.docker = {
       enable = true;

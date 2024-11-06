@@ -33,6 +33,7 @@
     # # "Hello, world!" when run.
     hello
     emacs
+    telegram-desktop
     
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-stable, ... }:
 
 {
   imports =
@@ -11,6 +11,7 @@
       ./nixvim/nixvim.nix
     ];
 
+  # programs.nixvim.enable = true;
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -104,6 +105,7 @@
        wget
        git
        python3
+       nodejs
        python312Packages.scapy
        python312Packages.impacket
        fzf
@@ -124,6 +126,7 @@
        seclists
        bloodhound-py
        gobuster
+       showtime
        fira-code
     ]) 
 
@@ -138,8 +141,7 @@
 
     ++
 
-    (with pkgs-unstable; [
-      showtime
+    (with pkgs-stable; [
     ]);
 
   virtualisation.docker = {

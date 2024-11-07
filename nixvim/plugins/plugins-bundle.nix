@@ -6,10 +6,11 @@
     ./mini.nix
     ./comment.nix
     ./floaterm.nix
-    # ./telescope.nix
+    ./telescope.nix
     # ./barbar.nix
     ./nix.nix
     ./lsp.nix
     ./cmp.nix
+    ./web-devicons.nix
   ];
 }

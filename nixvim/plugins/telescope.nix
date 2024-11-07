@@ -12,7 +12,7 @@
       # "<leader>fd" = "diagnostics";
     };
 
-    keymapsSilent = true;
+    # keymapsSilent = true;
 
     settings.defaults = {
       file_ignore_patterns = [

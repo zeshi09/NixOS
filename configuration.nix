@@ -129,7 +129,8 @@
        gobuster
        showtime
        fira-code
-    ]) 
+    ]
+    [ inputs.nixvim.packages.${pkgs.system}.default ]) 
 
     ++ 
 

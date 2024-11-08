@@ -8,11 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # ./nixvim/default.nix
-      ./nixvim.nix
+      ./nixvimconfig/default.nix
     ];
 
-  # programs.nixvim.enable = true;
+  # nixvim.enable = true;
+  programs.nixvim.enable = true;
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -129,8 +129,7 @@
        gobuster
        showtime
        fira-code
-    ]
-    [ inputs.nixvim.packages.${pkgs.system}.default ]) 
+    ]) 
 
     ++ 
 

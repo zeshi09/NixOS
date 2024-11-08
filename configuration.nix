@@ -8,7 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nixvim/nixvim.nix
+      # ./nixvim/default.nix
+      ./nixvim.nix
     ];
 
   # programs.nixvim.enable = true;

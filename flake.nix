@@ -8,29 +8,35 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim = {
       url = "github:nix-community/nixvim";
+      # url = "github:elythh/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nixvim, ... }@inputs: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      nixvim = nixvim.legacyPackages.${system};
     in {
       nixosConfigurations = {
         nixeshi = lib.nixosSystem {
           inherit system;
           modules = [ 
             ./configuration.nix 
-            inputs.nixvim.nixosModules.nixvim
+            # inputs.nixvim.nixosModules.nixvim
           ];
           specialArgs = {
             inherit pkgs-stable;
           };
       };
     };
+      # nvim = nixvim.makeNixvimWithModule {
+      #   inherit pkgs;
+      #   module = ./nixvimconfig;
+      # };
       homeConfigurations = {
         blackzeshi = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;

@@ -1,6 +1,5 @@
 { config, lib, ... }:
 {
-  programs.nixvim = {
   imports = [
     ./autocommands.nix
     ./keys.nix
@@ -101,5 +100,4 @@
       _G.theme = "${config.theme}"
     '';
   };
-};
 }

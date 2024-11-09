@@ -2,17 +2,17 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, pkgs-stable, ... }:
+{ inputs, system,  config, lib, pkgs, pkgs-stable, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nixvimconfig/default.nix
+      # ./nixvimconfig/default.nix
     ];
 
   # nixvim.enable = true;
-  programs.nixvim.enable = true;
+  # programs.nixvim.enable = true;
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -141,7 +141,6 @@
     )
 
     ++
-
     (with pkgs-stable; [
     ]);
 

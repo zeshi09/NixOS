@@ -2,14 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, system,  config, lib, pkgs, pkgs-stable, ... }:
+{
+  inputs,
+  system,
+  config,
+  lib,
+  pkgs,
+  pkgs-stable,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # ./nixvimconfig/default.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # ./nixvimconfig/default.nix
+  ];
 
   # nixvim.enable = true;
   # programs.nixvim.enable = true;
@@ -86,9 +94,13 @@
   users.users.blackzeshi = {
     isNormalUser = true;
     description = "blackzeshi";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -100,71 +112,87 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = 
+  environment.systemPackages =
     (with pkgs; [
-       # neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-       wget
-       git
-       python3
-       nodejs
-       python312Packages.scapy
-       python312Packages.impacket
-       fzf
-       yazi
-       nmap
-       ncdu
-       fastfetch
-       eza
-       zoxide
-       docker
-       wl-clipboard
-       fd
-       gnumake
-       gcc
-       netexec
-       lunarvim
-       payloadsallthethings
-       seclists
-       bloodhound-py
-       gobuster
-       showtime
-       fira-code
-    ]) 
-
-    ++ 
-
-    (if (config.services.xserver.windowManager.xmonad.enable == true)
-      then [ pkgs.rofi ]
-	  else
-	    (if (config.programs.hyprland.enable == true)
-	      then [ pkgs.tofi ] else [])
-    )
+      # neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      kubectl
+      minikube
+      wget
+      git
+      python3
+      nodejs
+      python312Packages.scapy
+      python312Packages.impacket
+      fzf
+      yazi
+      nmap
+      ncdu
+      fastfetch
+      eza
+      zoxide
+      docker
+      wl-clipboard
+      fd
+      gnumake
+      gcc
+      netexec
+      lunarvim
+      payloadsallthethings
+      seclists
+      bloodhound-py
+      gobuster
+      showtime
+      fira-code
+    ])
 
     ++
-    (with pkgs-stable; [
-    ]);
+
+      (
+        if (config.services.xserver.windowManager.xmonad.enable == true) then
+          [ pkgs.rofi ]
+        else
+          (if (config.programs.hyprland.enable == true) then [ pkgs.tofi ] else [ ])
+      )
+
+    ++ (
+      with pkgs-stable;
+      [
+      ]
+    );
 
   virtualisation.docker = {
-      enable = true;
+    enable = true;
   };
 
   # I use zsh btw
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh = {
+    enable = true;
+    syntaxHighlighting = {
       enable = true;
-      syntaxHighlighting = {
-          enable = true;
-      };
-      autosuggestions = {
-          enable = true;
-	  highlightStyle = "fg=yellow";
-      };
-      ohMyZsh = {
-          enable = true;
-	  theme = "flazz";
-          plugins = [ "docker" "zsh-interactive-cd" "git" "zsh-navigation-tools" "virtualenv" "zoxide" "docker" "nmap" "systemd" "colorize" ];
-      };
+    };
+    autosuggestions = {
+      enable = true;
+      highlightStyle = "fg=yellow";
+    };
+    ohMyZsh = {
+      enable = true;
+      theme = "flazz";
+      plugins = [
+        "docker"
+        "kubectl"
+        "zsh-interactive-cd"
+        "git"
+        "zsh-navigation-tools"
+        "virtualenv"
+        "zoxide"
+        "docker"
+        "nmap"
+        "systemd"
+        "colorize"
+      ];
+    };
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -185,7 +213,10 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.settings.allowed-users = [ "blackzeshi" ];
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
